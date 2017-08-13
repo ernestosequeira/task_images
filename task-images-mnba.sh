@@ -9,6 +9,9 @@ GREEN="$(tput setaf 2)"
 YELLOW="\n$(tput setaf 3)"
 BLUE="\n$(tput setaf 4)"
 
+# Path constant
+DIRECTORY="/cygdrive/z/TMSShares/Multimedia/COLECCION/Col2/1-2015/img"
+
 message_date() {
         # $1 : Message
         # $2 : Color
@@ -23,9 +26,6 @@ message() {
         # return : Message colorized
         echo -e "${2}${1}${NONE}"
 }
-
-DIRECTORY="/cygdrive/z/TMSShares/Multimedia/COLECCION/Col2/1-2015/img"
-
 
 ### Menú principal ###
 main_menu() {
@@ -52,7 +52,6 @@ main_menu() {
 }
 
 ### Eliminar todos los archivos con la extension indicada ###
-
 function deleteFiles(){
         echo "Input the file extension: (example: DS_Store)"
         read ext
@@ -70,7 +69,6 @@ function deleteFiles(){
 }
 
 ### Renombrar recursivamente todos los archivos de directorios con la fecha de modificación
-
 function renameFiles(){
         for FILE in $(find $1 -type f -name "*.*")
         do
@@ -90,7 +88,6 @@ function renameFiles(){
 }
 
 ### Mover archivos a su respectivos directorios raices ###
-
 function moveFiles(){
         for ((i=1; i<12201; i=i+100))
         do
