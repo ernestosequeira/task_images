@@ -70,6 +70,9 @@ function deleteFiles(){
 
 ### Renombrar recursivamente todos los archivos de directorios con la fecha de modificación
 function renameFiles(){
+	# Reemplazar espacios vacios por guion bajo
+        find $1 -depth -name '* *' | while IFS= read -r f ; do mv -i "$f" "$(dirname "$f")/$(basename "$f"|tr ' ' _)" ; done
+
         for FILE in $(find $1 -type f -name "*.*")
         do
                 nombre=$(basename $FILE)
