@@ -10,7 +10,7 @@ YELLOW="\n$(tput setaf 3)"
 BLUE="\n$(tput setaf 4)"
 
 # Path constant
-DIRECTORY="/cygdrive/z/TMSShares/Multimedia/COLECCION/Col2/1-2015/img"
+DIRECTORY="/cygdrive/z/TMSShares/Multimedia/COLECCION/"
 
 message_date() {
         # $1 : Message
@@ -30,20 +30,24 @@ message() {
 ### Menú principal ###
 main_menu() {
         clear
-        while [ "$option" != 3 ]
+        while [ "$option" != 0 ]
         do
                 echo " Main Menu: "
                 echo " -----------"
                 echo "[1]. Delete Files."
                 echo "[2]. Rename Files."
                 echo "[3]. Move Files."
-                echo "[4]. Exit"
-                read -p "Select an option [1-4]: " option
+                echo "[4]. Export Files."
+                echo "[5]. Create Directory."
+                echo "[6]. Exit"
+                read -p "Select an option [1-6]: " option
         case $option in
                 1) deleteFiles $DIRECTORY;;
                 2) renameFiles $DIRECTORY;;
                 3) moveFiles $DIRECTORY;;
-                4) exit 0;;
+                4) exportFiles $DIRECTORY;;
+                5) createDirectory $DIRECTORY;;
+                6) exit 0;;
                 *) echo "$option is an invalid option.";
                 echo "Press any key to finish continue...";
                 read foo;;
@@ -96,6 +100,32 @@ function moveFiles(){
         do
                 z=$(($i+99))
                 find $1/$i"-"$z -type f -name "*.*" -exec mv -t $1/$i"-"$z {} +
+        done
+}
+
+### Exportar la ruta del archivo y su nombre en columnas diferentes a un archivo .csv
+function exportFiles(){
+
+        for FILE in $(find $1 -type f -name "*.*")
+        do
+                nombre=$(basename $FILE)
+                ruta=$(dirname $FILE)
+
+                echo $ruta";"$nombre >> target.csv
+        done
+
+        message_date ">> Complete task." ${GREEN}
+        echo "Press any key to finish..."
+        read p
+        clear
+}
+
+### Crear indice de directorios raices ###
+function createDirectory(){
+        for ((i=1; i<12201; i=i+100))
+        do
+                z=$(($i+99))
+                mkdir $1/$i"-"$z {} +
         done
 }
 
